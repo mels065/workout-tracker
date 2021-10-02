@@ -4,7 +4,7 @@ const db = require('../../models');
 
 workoutRouter.get('/', async (req, res) => {
     try {
-        const lastWorkout = await db.Workout.findOne().sort({
+        const lastWorkout = await db.Workout.find({}).sort({
             day: -1
         });
         res.json(lastWorkout);
