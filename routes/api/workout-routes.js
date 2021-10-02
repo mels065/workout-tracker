@@ -40,4 +40,29 @@ workoutRouter.put('/:id', async (req, res) => {
     }
 });
 
+workoutRouter.get('/range', async (req, res) => {
+    try {
+        const workouts = await db.Workout.aggregate([
+            {
+                $match: {
+                    day: { $gte: new Date(new Date().setDate(new Date().getDate() - 8)) }
+                }
+            },
+            // {
+            //     $unwind: "$exercises"
+            // },
+            {
+                $addFields: {
+                    totalDuration: {
+                        $sum: "$exercises.duration"
+                    }
+                }
+            }
+        ]);
+        res.json(workouts);
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+});
+
 module.exports = workoutRouter;
