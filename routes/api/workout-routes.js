@@ -4,9 +4,15 @@ const db = require('../../models');
 
 workoutRouter.get('/', async (req, res) => {
     try {
-        const lastWorkout = await db.Workout.find({}).sort({
-            day: -1
-        });
+        const lastWorkout = await db.Workout.aggregate([
+            {
+                $addFields: {
+                    totalDuration: {
+                        $sum: "$exercises.duration"
+                    }
+                }
+            }
+        ]);
         res.json(lastWorkout);
     } catch (err) {
         res.json({ message: err.message });
