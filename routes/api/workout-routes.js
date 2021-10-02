@@ -48,9 +48,6 @@ workoutRouter.get('/range', async (req, res) => {
                     day: { $gte: new Date(new Date().setDate(new Date().getDate() - 8)) }
                 }
             },
-            // {
-            //     $unwind: "$exercises"
-            // },
             {
                 $addFields: {
                     totalDuration: {
