@@ -25,7 +25,7 @@ workoutRouter.post('/', async (req, res) => {
 workoutRouter.put('/:id', async (req, res) => {
     try {
         const { id: _id } = req.params;
-        const workout = await db.Workout.update(
+        const workout = await db.Workout.updateOne(
             {
                 _id
             },
