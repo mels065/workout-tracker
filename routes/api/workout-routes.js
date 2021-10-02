@@ -13,4 +13,13 @@ workoutRouter.get('/', async (req, res) => {
     }
 });
 
+workoutRouter.post('/', async (req, res) => {
+    try {
+        const workout = await db.Workout.create({});
+        res.json(workout);
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+});
+
 module.exports = workoutRouter;
