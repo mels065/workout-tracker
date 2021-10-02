@@ -22,4 +22,22 @@ workoutRouter.post('/', async (req, res) => {
     }
 });
 
+workoutRouter.put('/:id', async (req, res) => {
+    try {
+        const { id: _id } = req.params;
+        const workout = await db.Workout.update(
+            {
+                _id
+            },
+            {
+                $push: {
+                    exercises: req.body
+            }
+        })
+        res.json(workout);
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+});
+
 module.exports = workoutRouter;
