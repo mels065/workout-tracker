@@ -1,11 +1,25 @@
 const mongoose = require('mongoose');
 const db = require('../models');
 
-mongoose.connect('mongodb://localhost/workout', {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+require('dotenv').config();
+
+if (process.env.NODE_ENV && process.env.NODE_ENV === 'deployment') {
+  mongoose.connect(
+    process.env.MONGODB_DEPLOYED_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  );
+} else {
+  mongoose.connect('mongodb://localhost/workout', {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  });
+}
 
 const workoutSeed = [
   {

@@ -33,9 +33,15 @@ async function init() {
 
     try {
         await mongoose.connect(
-            process.env.MONGODB_URL,
-            { useNewUrlParser: true, useUnifiedTopology: true }
-        );
+            process.env.MONGODB_URL || 'mongodb://localhost/workout',
+            {
+              useNewUrlParser: true,
+              useUnifiedTopology: true,
+              useCreateIndex: true,
+              useFindAndModify: false
+            }
+          );
+          
         app.listen(PORT, () => {
             console.log('\x1b[32m', `Server listening on port ${PORT}`, '\x1b[0m');
         });
